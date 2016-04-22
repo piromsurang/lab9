@@ -17,6 +17,11 @@ public class ConverterUI extends JFrame {
 	private JRadioButton rightToLeft;
 	private JOptionPane dialog;
 	
+	
+	/**
+	 * 
+	 * @param converter is convert machine
+	 */
 	public ConverterUI( UnitConverter converter ) {
 		super( "Distance Converter" );
 		this.converter = converter;
@@ -24,11 +29,17 @@ public class ConverterUI extends JFrame {
 		setDefaultCloseOperation( EXIT_ON_CLOSE );
 	}
 
+	/**
+	 * to run GUI
+	 */
 	public void run() {
 		pack();
 		setVisible( true );
 	}
 	
+	/**
+	 * informations of GUI
+	 */
 	public void initComponent() {
 
 		JPanel topPanel = new JPanel();
@@ -91,6 +102,13 @@ public class ConverterUI extends JFrame {
 		this.add( panel );
 	}
 	
+	/**
+	 * 
+	 * perform conversation
+	 * 
+	 * @author Piromsurang
+	 *
+	 */
 	class ConvertButtonListener implements ActionListener {
 		public void actionPerformed( ActionEvent e ) {
 			
@@ -123,6 +141,12 @@ public class ConverterUI extends JFrame {
 		}
 	}
 	
+	/**
+	 * 
+	 * clear everything
+	 * @author Piromsurang
+	 *
+	 */
 	class ClearButtonListener implements ActionListener {
 		public void actionPerformed( ActionEvent e ) {
 			input.setText( "" );
@@ -132,6 +156,12 @@ public class ConverterUI extends JFrame {
 		}
 	}
 	
+	/**
+	 * switch between left input box and right input box
+	 * 
+	 * @author Piromsurang
+	 *
+	 */
 	class ViceVersaListener implements ActionListener {
 		public void actionPerformed( ActionEvent e ) {
 			if ( leftToRight.isSelected() ) {
@@ -145,6 +175,11 @@ public class ConverterUI extends JFrame {
 		}
 	}
 	
+	/**
+	 * main to run GUI
+	 * 
+	 * @param args
+	 */
 	public static void main( String[] args ) {
 		UnitConverter converter = new UnitConverter();
 		ConverterUI converterUI = new ConverterUI( converter );
