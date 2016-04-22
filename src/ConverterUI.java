@@ -15,6 +15,7 @@ public class ConverterUI extends JFrame {
 	private JButton clearButton;
 	private JRadioButton leftToRight;
 	private JRadioButton rightToLeft;
+	private JOptionPane dialog;
 	
 	public ConverterUI( UnitConverter converter ) {
 		super( "Distance Converter" );
@@ -32,6 +33,8 @@ public class ConverterUI extends JFrame {
 
 		JPanel topPanel = new JPanel();
 		
+		dialog = new JOptionPane();
+		
 		inputUnit = new JComboBox( Length.values() );
 		
 		equalSign = new JLabel( "  =  " );
@@ -47,6 +50,8 @@ public class ConverterUI extends JFrame {
 		
 		input = new JTextField( 10 );
 		input.addActionListener( convertListener );
+		
+		output.addActionListener( convertListener );
 		
 		clearButton = new JButton( "clear" );
 		ClearButtonListener clearButtonListener = new ClearButtonListener();
@@ -88,27 +93,33 @@ public class ConverterUI extends JFrame {
 	
 	class ConvertButtonListener implements ActionListener {
 		public void actionPerformed( ActionEvent e ) {
-			if ( input.isEditable() == true ) {
-				String s = input.getText().trim();
-				if ( s.length() > 0 ) {
-					double inputValue = Double.valueOf( s );
-					double outputValue = converter.convert( inputValue,(Length) inputUnit.getSelectedItem(),(Length) outputUnit.getSelectedItem() );
-
-					output.setText( outputValue + "" );
-				}
-			}
 			
-			if ( output.isEditable() == true ){
-				String s = output.getText().trim();
-				
-				if ( s.length() > 0 ) {
-					double inputValue = Double.valueOf( s );
-					double outputValue = converter.convert( inputValue,(Length) outputUnit.getSelectedItem(),(Length) inputUnit.getSelectedItem() );
-					
-					System.out.println( outputValue );
-					input.setText( outputValue + "" );
+			try {
+				if ( input.isEditable() == true ) {
+					String s = input.getText().trim();
+					if ( s.length() > 0 ) {
+						double inputValue = Double.valueOf( s );
+						double outputValue = converter.convert( inputValue,(Length) inputUnit.getSelectedItem(),(Length) outputUnit.getSelectedItem() );
+
+						output.setText( outputValue + "" );
+					}
 				}
+				
+				if ( output.isEditable() == true ){
+					String s = output.getText().trim();
+					
+					if ( s.length() > 0 ) {
+						double inputValue = Double.valueOf( s );
+						double outputValue = converter.convert( inputValue,(Length) outputUnit.getSelectedItem(),(Length) inputUnit.getSelectedItem() );
+						
+						System.out.println( outputValue );
+						input.setText( outputValue + "" );
+					}
+				}
+			} catch ( NumberFormatException a ) {
+				JOptionPane.showMessageDialog( null , "That's not a number!" );
 			}
+
 		}
 	}
 	
