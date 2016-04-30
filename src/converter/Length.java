@@ -1,12 +1,14 @@
+package converter;
+
 /**
  * 
  * @author Piromsurang
  *
  */
-public enum Length {
+public enum Length implements Unit {
 	METER( "Meter", 1.0 ),
-	CENTIMETER( "Centimeter", 0.01 ),
-	KILOMETER( "Kilometer", 1000.0 ),
+	CENTIMETER( "Centimeter", 100.0 ),
+	KILOMETER( "Kilometer", 0.001 ),
 	MILE( "Mile", 1609.344 ),
 	FOOT( "Feet", 0.30480),
 	WA( "Wa", 2.0 );
@@ -29,7 +31,7 @@ public enum Length {
 	 * 
 	 * @return return distance
 	 */
-	public double getDistance() {
+	public double getValue() {
 		return this.distance;
 	}
 	

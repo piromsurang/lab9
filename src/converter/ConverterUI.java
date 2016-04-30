@@ -1,3 +1,4 @@
+package converter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -111,33 +112,39 @@ public class ConverterUI extends JFrame {
 	 */
 	class ConvertButtonListener implements ActionListener {
 		public void actionPerformed( ActionEvent e ) {
-			
-			try {
-				if ( input.isEditable() == true ) {
-					String s = input.getText().trim();
-					if ( s.length() > 0 ) {
+
+
+			if ( input.isEnabled() == true ) {
+				String s = input.getText().trim();
+				if ( s.length() > 0 ) {
+					try {
 						double inputValue = Double.valueOf( s );
 						double outputValue = converter.convert( inputValue,(Length) inputUnit.getSelectedItem(),(Length) outputUnit.getSelectedItem() );
 
 						output.setText( outputValue + "" );
+					} catch ( NumberFormatException a ) {
+						JOptionPane.showMessageDialog( null , "That's not a number!" );
 					}
+
 				}
-				
-				if ( output.isEditable() == true ){
-					String s = output.getText().trim();
-					
-					if ( s.length() > 0 ) {
-						double inputValue = Double.valueOf( s );
-						double outputValue = converter.convert( inputValue,(Length) outputUnit.getSelectedItem(),(Length) inputUnit.getSelectedItem() );
-						
-						System.out.println( outputValue );
-						input.setText( outputValue + "" );
-					}
-				}
-			} catch ( NumberFormatException a ) {
-				JOptionPane.showMessageDialog( null , "That's not a number!" );
 			}
 
+			else {
+				String s = output.getText().trim();
+
+				if ( s.length() > 0 ) {
+					try {
+						double inputValue = Double.valueOf( s );
+						double outputValue = converter.convert( inputValue,(Length) outputUnit.getSelectedItem(),(Length) inputUnit.getSelectedItem() );
+
+						System.out.println( outputValue );
+						input.setText( outputValue + "" );
+					} catch ( NumberFormatException a ) {
+						JOptionPane.showMessageDialog( null , "That's not a number!" );
+					}
+
+				}
+			}
 		}
 	}
 	
@@ -168,22 +175,10 @@ public class ConverterUI extends JFrame {
 				output.setEnabled( false );
 				input.setEnabled( true );
 			}
-			else {
+			else if ( rightToLeft.isSelected() ) {
 				input.setEnabled( false );
 				output.setEnabled( true );
 			}
 		}
 	}
-	
-	/**
-	 * main to run GUI
-	 * 
-	 * @param args
-	 */
-	public static void main( String[] args ) {
-		UnitConverter converter = new UnitConverter();
-		ConverterUI converterUI = new ConverterUI( converter );
-		converterUI.run();
-	}
-	
 }
